@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawCare AI - Smart Pet Care Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand">🐾 PawCare AI</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#" id="dashboard-link" style="display:none;">Dashboard</a>
+      <button id="auth-btn">Login</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Your AI-Powered Pet Care Companion</h1>
+      <p>Get personalized recommendations for diet, exercise, grooming, and health</p>
+    </div>
+
+    <!-- Login Prompt (shown when not logged in) -->
+    <div id="login-prompt" class="login-prompt">
+      <div class="prompt-card">
+        <h2>🔒 Login Required</h2>
+        <p>Please login or register to start chatting with PawCare AI and access personalized pet care recommendations.</p>
+        <button class="btn-primary" onclick="showAuthModal()">Login / Register</button>
+      </div>
+    </div>
+
+    <!-- Chat Container (shown when logged in) -->
+    <div id="chat-container" style="display:none;">
+      <div id="chat-history">
+        <div class="ai-msg welcome-msg">
+          👋 Hello! I'm PawCare AI. Ask me anything about pet care, nutrition, health, or training!
+        </div>
+      </div>
+      <div id="input-box">
+        <input 
+          type="text" 
+          id="user-input" 
+          placeholder="Ask about pet care, nutrition, health..." 
+          autocomplete="off"
+        >
+        <button id="send-btn">
+          <span>Send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-auth-modal">&times;</span>
+      <h2>Login / Register</h2>
+      <div class="auth-form">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email (for registration)">
+        <div class="button-group">
+          <button id="register-btn" class="btn-primary">Register</button>
+          <button id="login-btn" class="btn-secondary">Login</button>
+        </div>
+        <p id="auth-error" class="error-msg"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load script.js -->
+  <script src="script.js"></script>
+  
+  <!-- Initialize after script loads -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAuthStatus();
+      
+      // Add event listeners
+      document.getElementById('send-btn').addEventListener('click', sendMessage);
+      document.getElementById('user-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          sendMessage();
+        }
+      });
+      
+      document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
+      document.getElementById('register-btn').addEventListener('click', register);
+      document.getElementById('login-btn').addEventListener('click', login);
+    });
+  </script>
+</body>
+</html>

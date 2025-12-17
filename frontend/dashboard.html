@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawCare AI - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand">🐾 PawCare AI</div>
+    <div class="nav-links">
+      <a href="index.html">Chat</a>
+      <a href="dashboard.html">Dashboard</a>
+      <button id="logout-btn">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Loading Spinner -->
+  <div id="loading-spinner" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Dashboard Container (hidden until auth check) -->
+  <div id="dashboard-content" class="container dashboard-container" style="display:none;">
+    <div class="dashboard-header">
+      <h1>My Pets Dashboard</h1>
+      <button class="btn-primary" id="add-pet-btn">+ Add New Pet</button>
+    </div>
+    
+    <!-- Pets List -->
+    <div id="pets-list" class="pets-grid"></div>
+
+    <!-- Community Section -->
+    <div class="community-section">
+      <div class="section-header">
+        <h2>Community</h2>
+        <button class="btn-secondary" id="add-post-btn">Share Experience</button>
+      </div>
+      <div id="community-posts" class="posts-grid"></div>
+    </div>
+  </div>
+
+  <!-- Add Pet Modal -->
+  <div id="add-pet-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-pet-modal">&times;</span>
+      <h2>Add New Pet</h2>
+      <form id="pet-form">
+        <input type="text" id="pet-name" placeholder="Pet Name *" required>
+        <input type="text" id="pet-species" placeholder="Species (e.g., Dog, Cat) *" required>
+        <input type="text" id="pet-breed" placeholder="Breed">
+        <input type="number" id="pet-age" placeholder="Age (years)" min="0">
+        <input type="number" step="0.1" id="pet-weight" placeholder="Weight (kg)" min="0">
+        <textarea id="pet-medical" placeholder="Medical Notes" rows="3"></textarea>
+        <textarea id="pet-diet" placeholder="Dietary Preferences" rows="3"></textarea>
+        <button type="submit" class="btn-primary">Save Pet</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Medication Modal -->
+  <div id="add-medication-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-med-modal">&times;</span>
+      <h2>Add Medication</h2>
+      <form id="medication-form">
+        <input type="hidden" id="medication-pet-id">
+        <input type="text" id="med-name" placeholder="Medication Name *" required>
+        <input type="text" id="med-dosage" placeholder="Dosage (e.g., 1 tablet)">
+        <input type="text" id="med-frequency" placeholder="Frequency (e.g., Twice daily)">
+        <input type="text" id="med-time" placeholder="Time of Day (e.g., Morning, Evening)">
+        <textarea id="med-notes" placeholder="Additional Notes" rows="3"></textarea>
+        <button type="submit" class="btn-primary">Save Medication</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Community Post Modal -->
+  <div id="add-post-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-post-modal">&times;</span>
+      <h2>Share with Community</h2>
+      <form id="post-form">
+        <input type="text" id="post-title" placeholder="Post Title *" required>
+        <textarea id="post-content" placeholder="Share your experience or ask a question..." rows="5" required></textarea>
+        <select id="post-type">
+          <option value="experience">Experience</option>
+          <option value="question">Question</option>
+          <option value="adoption">Adoption</option>
+        </select>
+        <button type="submit" class="btn-primary">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Load script.js -->
+  <script src="script.js"></script>
+  
+  <!-- Initialize dashboard -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check authentication first
+      checkDashboardAuth();
+      
+      // Add event listeners
+      document.getElementById('logout-btn').addEventListener('click', logout);
+      document.getElementById('add-pet-btn').addEventListener('click', showAddPetForm);
+      document.getElementById('close-pet-modal').addEventListener('click', closeAddPetForm);
+      document.getElementById('pet-form').addEventListener('submit', addPet);
+      
+      document.getElementById('add-post-btn').addEventListener('click', showAddPostForm);
+      document.getElementById('close-post-modal').addEventListener('click', closeAddPostForm);
+      document.getElementById('post-form').addEventListener('submit', addCommunityPost);
+      
+      document.getElementById('close-med-modal').addEventListener('click', closeMedicationForm);
+      document.getElementById('medication-form').addEventListener('submit', addMedication);
+    });
+  </script>
+</body>
+</html>
